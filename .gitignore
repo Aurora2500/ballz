@@ -1,0 +1,7 @@
+.vscode
+
+*.make
+Makefile
+bin
+obj
+projects
