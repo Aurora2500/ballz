@@ -25,6 +25,6 @@ project "hello_ballz"
 	targetdir "projects/"
 
 	files { "hello_ballz/**.hpp", "hello_ballz/**.cpp" }
-	links { "ballz", "SDL2" }
+	links { "ballz", "SDL2", "GLEW", "GL" }
 	includedirs { "ballz" }
 

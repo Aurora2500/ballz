@@ -6,11 +6,11 @@
 
 namespace ballz {
 
-Ballz::Ballz() {
+Ballz::Ballz(const std::string& title) {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_WindowFlags flags = static_cast<SDL_WindowFlags>(SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	m_window = SDL_CreateWindow(
-		"Ballz",
+		title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		1920,
@@ -26,7 +26,7 @@ Ballz::Ballz() {
 		std::cerr << "Failed to initialize GLEW: " << glewGetErrorString(res) << std::endl;
 		exit(1);
 	}
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.05f, 0.1f, 0.08f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	SDL_GL_SwapWindow(m_window);
 }
@@ -41,10 +41,19 @@ void Ballz::run() {
 	bool running = true;
 	while (running) {
 		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
+			if (event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) ) {
 				running = false;
 			}
 		}
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glBegin(GL_TRIANGLES);
+		glVertex3d(-0.5, -0.5, 0.0);
+		glVertex3d(0.5, -0.5, 0.0);
+		glVertex3d(0.0, 0.5, 0.0);
+		glEnd();
+
+		SDL_GL_SwapWindow(m_window);
 	}
 }
 
